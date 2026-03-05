@@ -10,15 +10,14 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { Trophy } from "lucide-react"
-import Link from "next/link"
 
 const AppSidebar = ({ name, email }: { name: string; email: string }) => (
-  <Sidebar>
+  <Sidebar variant="inset">
     <SidebarHeader>
       <SidebarMenu>
         <SidebarMenuItem>
           <SidebarMenuButton size="lg" asChild>
-            <Link href="#">
+            <a href="#">
               <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                 <Trophy className="size-4" />
               </div>
@@ -26,7 +25,7 @@ const AppSidebar = ({ name, email }: { name: string; email: string }) => (
                 <span className="truncate font-medium">SportEasy</span>
                 <span className="truncate text-xs">Manage. Play. Win.</span>
               </div>
-            </Link>
+            </a>
           </SidebarMenuButton>
         </SidebarMenuItem>
       </SidebarMenu>
