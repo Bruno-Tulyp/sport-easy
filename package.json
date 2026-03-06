@@ -8,7 +8,10 @@
     "start": "next start",
     "lint": "eslint",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate"
+    "db:migrate": "drizzle-kit migrate",
+    "db:seed": "tsx src/db/script/seed.ts",
+    "db:clear": "tsx src/db/script/clear.ts",
+    "db:reset": "pnpm db:clear && pnpm db:migrate && pnpm db:seed"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
