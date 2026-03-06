@@ -1,10 +1,11 @@
-import { email, requiredField, trimmedString } from "@/lib/schema"
+import { email, requiredTrimmedField } from "@/lib/schema"
 import z from "zod"
 
 export const signUpFormSchema = z.object({
-  name: requiredField,
+  name: requiredTrimmedField,
   email,
-  password: trimmedString
+  password: z
+    .string()
     .min(8, "Password must be at least 8 characters")
     .max(30, "Password must be at most 30 characters")
     .refine(

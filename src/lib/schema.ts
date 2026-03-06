@@ -1,7 +1,7 @@
 import z from "zod"
 
-export const trimmedString = z.string().trim()
+export const requiredField = z.string().min(1, "Field is required")
 
-export const requiredField = trimmedString.min(1, "Field is required")
+export const requiredTrimmedField = requiredField.trim()
 
 export const email = z.email()
