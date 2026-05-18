@@ -35,7 +35,7 @@ const SignUpForm = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: (values: SignUpFormOutput) => authClient.signUp.email(values),
     onSuccess: ({ error }) => {
-      if (error) toast.error(error.message)
+      if (error) toast.error(error.message ?? error.statusText)
       else router.push("/login")
     },
     onError: () => toast.error("Something went wrong. Please try again later."),

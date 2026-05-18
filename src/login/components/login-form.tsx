@@ -32,7 +32,7 @@ const LoginForm = () => {
     mutationFn: (values: LoginFormOutput) =>
       authClient.signIn.email({ ...values, callbackURL: "/" }),
     onSuccess: ({ error }) => {
-      if (error) toast.error(error.message)
+      if (error) toast.error(error.message ?? error.statusText)
     },
     onError: () => toast.error("Something went wrong. Please try again later."),
   })

@@ -45,7 +45,7 @@ const NavUser = ({ name, email }: { name: string; email: string }) => {
   const { mutate, isPending } = useMutation({
     mutationFn: () => authClient.signOut(),
     onSuccess: ({ error }) => {
-      if (error) toast.error(error.message)
+      if (error) toast.error(error.message ?? error.statusText)
       else router.push("/login")
     },
     onError: () => toast.error("Something went wrong. Please try again later."),
