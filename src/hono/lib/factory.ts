@@ -1,12 +1,8 @@
 import { fail, send } from "@/hono/lib/format"
+import { HonoAppEnv } from "@/hono/lib/type"
 import { createFactory } from "hono/factory"
 
-export const factory = createFactory<{
-  Variables: {
-    fail: ReturnType<typeof fail>
-    send: ReturnType<typeof send>
-  }
-}>({
+export const factory = createFactory<HonoAppEnv>({
   initApp: (app) => {
     app.use(async (c, next) => {
       c.set("fail", fail(c))
