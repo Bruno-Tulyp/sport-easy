@@ -10,9 +10,15 @@ const seed = async () => {
 
   const userIds = await seedUsers()
 
+  console.log(`👤 Seeded ${userIds.length} users.`)
+
   const teams = await seedTeams(db, userIds)
 
+  console.log(`⚽ Seeded ${teams.length} teams.`)
+
   await seedMatches(db, teams)
+
+  console.log(`🏆 Seeded matches for ${teams.length} teams.`)
 
   console.log("✅ Database seeded successfully!")
 

@@ -12,8 +12,17 @@ const dbSchema = z
     connectionString: `postgresql://${user}:${password}@${host}:${port}/${dbName}`,
   }))
 
+const seedSchema = z.object({
+  user: z.object({
+    email: z.email(),
+    name: z.string(),
+    password: z.string(),
+  }),
+})
+
 const configSchema = z.object({
   database: dbSchema,
+  seed: seedSchema,
 })
 
 export const config = configSchema.parse({
@@ -23,5 +32,12 @@ export const config = configSchema.parse({
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     dbName: process.env.DB_NAME,
+  },
+  seed: {
+    user: {
+      email: process.env.SEED_USER_EMAIL,
+      name: process.env.SEED_USER_NAME,
+      password: process.env.SEED_USER_PASSWORD,
+    },
   },
 })
