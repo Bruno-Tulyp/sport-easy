@@ -20,9 +20,10 @@ app.get("/hello", ({ var: { send } }) => send({ message: "Hello SportEasy!" }))
 
 app.on(["GET", "POST"], "/auth/*", (c) => auth.handler(c.req.raw))
 
-app.route("/teams", teamRoutes)
-app.route("/invitations", invitationRoutes)
-app.route("/matches", matchRoutes)
+app
+  .route("/teams", teamRoutes)
+  .route("/invitations", invitationRoutes)
+  .route("/matches", matchRoutes)
 
 export const GET = handle(app)
 export const POST = handle(app)
