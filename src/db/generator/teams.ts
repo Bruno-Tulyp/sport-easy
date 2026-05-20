@@ -1,4 +1,5 @@
 import { teamInvitations, teamMembers, teams } from "@/db/schema/teams"
+import { slugify } from "@/lib/utils"
 import { teamMemberPermissions, teamMemberRoles } from "@/teams/lib/schema"
 import { TeamMemberPermissions } from "@/teams/lib/type"
 import { faker } from "@faker-js/faker"
@@ -7,7 +8,7 @@ export const teamGenerator = (name: string) =>
   ({
     location: faker.location.streetAddress(),
     name,
-    slug: faker.helpers.slugify(name).toLowerCase(),
+    slug: slugify(name),
   }) satisfies typeof teams.$inferInsert
 
 export const teamMemberGenerator = ({
