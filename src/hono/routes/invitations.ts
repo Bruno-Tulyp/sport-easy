@@ -4,6 +4,7 @@ import { zValidatorError } from "@/hono/lib/validator"
 import { authMiddleware } from "@/hono/middlewares/auth"
 import { addInvitationSchema } from "@/invitations/add/lib/schema"
 import { paramUuid } from "@/lib/schema"
+import { isUserTeamAdmin } from "@/teams/checks/is-user-team-admin"
 import { zValidator } from "@hono/zod-validator"
 import { eq } from "drizzle-orm"
 
@@ -114,14 +115,7 @@ invitationRoutes.post(
   }) => {
     const { teamId, email, permission, role } = req.valid("json")
 
-    const isTeamAdmin = await db.query.teamMembers.findFirst({
-      where: (teamMembers, { and, eq }) =>
-        and(
-          eq(teamMembers.teamId, teamId),
-          eq(teamMembers.userId, userId),
-          eq(teamMembers.permission, "admin"),
-        ),
-    })
+    const isTeamAdmin = await isUserTeamAdmin({ db, teamId, userId })
 
     if (!isTeamAdmin) {
       return fail(403, "You must be a team admin to invite others.")

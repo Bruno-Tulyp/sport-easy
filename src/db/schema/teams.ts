@@ -43,6 +43,10 @@ export const teamInvitations = pgTable(
   (t) => [unique().on(t.teamId, t.email)],
 )
 
+export const teamsRelations = relations(teams, ({ many }) => ({
+  members: many(teamMembers),
+}))
+
 export const teamMembersRelations = relations(teamMembers, ({ one }) => ({
   team: one(teams, {
     fields: [teamMembers.teamId],

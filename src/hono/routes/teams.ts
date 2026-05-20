@@ -4,6 +4,7 @@ import { zValidatorError } from "@/hono/lib/validator"
 import { authMiddleware } from "@/hono/middlewares/auth"
 import { slugify } from "@/lib/utils"
 import { addTeamSchema } from "@/teams/add/lib/schema"
+import { userBelongsToTeam } from "@/teams/checks/user-belongs-to-team"
 import { zValidator } from "@hono/zod-validator"
 
 export const teamRoutes = factory.createApp().use(authMiddleware)
@@ -29,7 +30,7 @@ teamRoutes.get(
 )
 
 teamRoutes.get(
-  "/:slug",
+  "/:teamSlug",
   async ({
     req,
     var: {
@@ -39,26 +40,19 @@ teamRoutes.get(
       send,
     },
   }) => {
-    const { slug } = req.param()
+    const { teamSlug } = req.param()
 
-    const team = await db.query.teams.findFirst({
-      columns: { id: true, location: true, name: true, slug: true },
-      where: (teams, { eq }) => eq(teams.slug, slug),
+    const [belongs, data] = await userBelongsToTeam({
+      db,
+      teamSlug,
+      userId,
     })
 
-    if (!team) {
-      return fail(404, "Team not found.")
+    if (!belongs) {
+      return fail(404, data.errorMessage)
     }
 
-    const teamMember = await db.query.teamMembers.findFirst({
-      columns: { permission: true },
-      where: (teamMembers, { and, eq }) =>
-        and(eq(teamMembers.teamId, team.id), eq(teamMembers.userId, userId)),
-    })
-
-    if (!teamMember) {
-      return fail(404, "Team not found for the user.")
-    }
+    const { permission, team } = data
 
     const members = await db.query.teamMembers.findMany({
       columns: { permission: true, role: true },
@@ -66,10 +60,7 @@ teamRoutes.get(
       where: (teamMembers, { eq }) => eq(teamMembers.teamId, team.id),
     })
 
-    return send({
-      team: { ...team, permission: teamMember.permission },
-      members,
-    })
+    return send({ team, members, permission })
   },
 )
 

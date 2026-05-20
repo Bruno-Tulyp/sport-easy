@@ -50,17 +50,16 @@ export const matchParticipants = pgTable(
   (t) => [unique().on(t.matchId, t.userId)],
 )
 
-export const matchesRelations = relations(matches, ({ many }) => ({
-  participants: many(matchParticipants),
+export const matchesRelations = relations(matches, ({ one }) => ({
+  team: one(teams, {
+    fields: [matches.teamId],
+    references: [teams.id],
+  }),
 }))
 
 export const matchParticipantsRelations = relations(
   matchParticipants,
   ({ one }) => ({
-    match: one(matches, {
-      fields: [matchParticipants.matchId],
-      references: [matches.id],
-    }),
     user: one(users, {
       fields: [matchParticipants.userId],
       references: [users.id],
