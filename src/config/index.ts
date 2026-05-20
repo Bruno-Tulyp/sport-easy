@@ -1,3 +1,4 @@
+import { email } from "@/lib/schema"
 import z from "zod"
 
 const dbSchema = z
@@ -14,7 +15,7 @@ const dbSchema = z
 
 const seedSchema = z.object({
   user: z.object({
-    email: z.email(),
+    email,
     name: z.string(),
     password: z.string(),
   }),
