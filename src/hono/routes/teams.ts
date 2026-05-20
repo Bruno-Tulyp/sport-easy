@@ -50,25 +50,26 @@ teamRoutes.get(
       return fail(404, "Team not found.")
     }
 
-    const isTeamMember = await db.query.teamMembers.findFirst({
-      columns: { role: true },
+    const teamMember = await db.query.teamMembers.findFirst({
+      columns: { permission: true },
       where: (teamMembers, { and, eq }) =>
         and(eq(teamMembers.teamId, team.id), eq(teamMembers.userId, userId)),
     })
 
-    if (!isTeamMember) {
+    if (!teamMember) {
       return fail(404, "Team not found for the user.")
     }
-
-    const { id: teamId, ...teamWithoutId } = team
 
     const members = await db.query.teamMembers.findMany({
       columns: { permission: true, role: true },
       with: { user: { columns: { name: true, email: true } } },
-      where: (teamMembers, { eq }) => eq(teamMembers.teamId, teamId),
+      where: (teamMembers, { eq }) => eq(teamMembers.teamId, team.id),
     })
 
-    return send({ team: teamWithoutId, members })
+    return send({
+      team: { ...team, permission: teamMember.permission },
+      members,
+    })
   },
 )
 
