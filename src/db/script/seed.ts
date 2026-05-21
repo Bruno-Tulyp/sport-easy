@@ -4,6 +4,9 @@ import { db } from "@/db"
 import seedMatches from "@/db/seed/matches"
 import seedTeams from "@/db/seed/teams"
 import seedUsers from "@/db/seed/users"
+import { faker } from "@faker-js/faker"
+
+faker.seed(1)
 
 const seed = async () => {
   console.log("🌱 Seeding database...")
