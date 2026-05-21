@@ -104,7 +104,7 @@ export const matchRoutes = factory
         return fail(404, "Match not found.")
       }
 
-      const { teamId, ...matchWithoutTeamId } = match
+      const { teamId, id, ...matchWithoutIds } = match
 
       const isTeamMember = await db.query.teamMembers.findFirst({
         where: (teamMembers, { and, eq }) =>
@@ -119,20 +119,19 @@ export const matchRoutes = factory
         columns: { reply: true },
         where: (matchParticipants, { and, eq }) =>
           and(
-            eq(matchParticipants.matchId, match.id),
+            eq(matchParticipants.matchId, id),
             eq(matchParticipants.userId, userId),
           ),
       })
 
       const participants = await db.query.matchParticipants.findMany({
         columns: { reply: true },
-        with: { user: { columns: { name: true } } },
-        where: (matchParticipants, { eq }) =>
-          eq(matchParticipants.matchId, match.id),
+        with: { user: { columns: { id: true, name: true } } },
+        where: (matchParticipants, { eq }) => eq(matchParticipants.matchId, id),
       })
 
       return send({
-        match: matchWithoutTeamId,
+        match: matchWithoutIds,
         participants,
         reply: userParticipation?.reply ?? null,
       })
