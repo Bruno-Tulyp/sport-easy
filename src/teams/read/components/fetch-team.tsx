@@ -3,6 +3,7 @@
 import ErrorInQuery from "@/components/query/error-in-query"
 import { teamRpcClient } from "@/hono/lib/rpc-client"
 import useRpcQuery from "@/hooks/use-rpc-query"
+import FetchMatches from "@/matches/read/components/fetch-matches"
 import TeamDetailsCard from "@/teams/read/components/team-details-card"
 
 const FetchTeam = ({ teamSlug }: { teamSlug: string }) => {
@@ -19,7 +20,12 @@ const FetchTeam = ({ teamSlug }: { teamSlug: string }) => {
     return <TeamDetailsCard skeleton />
   }
 
-  return <TeamDetailsCard {...data} />
+  return (
+    <>
+      <TeamDetailsCard {...data} />
+      <FetchMatches teamSlug={teamSlug} />
+    </>
+  )
 }
 
 export default FetchTeam

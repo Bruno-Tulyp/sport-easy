@@ -31,7 +31,7 @@ const MainContent = ({
 const FetchMatches = ({ teamSlug }: { teamSlug?: string }) => {
   const { data, error, isError, isPending } = useRpcQuery(
     () => matchRpcClient.index.$get({ query: { teamSlug } }),
-    { queryKey: ["matches"] },
+    { queryKey: teamSlug ? [`matches`, teamSlug] : [`matches`] },
   )
 
   if (isError) {
