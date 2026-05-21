@@ -29,17 +29,13 @@ const useRpcQuery = <
     queryFn: async () => {
       const res = await request()
 
-      if (!res.ok) {
-        throw new Error("Something went wrong while fetching data.")
+      const body = await res.json()
+
+      if (!body.success) {
+        throw new Error(`[${body.error.code}] ${body.error.message}`)
       }
 
-      const json = await res.json()
-
-      if (!json.success) {
-        throw new Error(`[${json.error.code}] ${json.error.message}`)
-      }
-
-      return json.data as InferData<R>
+      return body.data as InferData<R>
     },
   })
 
