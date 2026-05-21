@@ -76,8 +76,11 @@ const MatchDetailsCard = ({ match, participants, reply, skeleton }: Props) => {
 
   const canReply = startDate > new Date().toISOString() && reply
 
-  const handleReply = (action: "accept" | "decline") => () =>
+  const handleReply = (action: "accept" | "decline") => () => {
+    if (!canReply) return
+
     toast(`${action}: ${slug}`)
+  }
 
   return (
     <>
