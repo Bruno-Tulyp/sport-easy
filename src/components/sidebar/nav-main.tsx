@@ -8,14 +8,15 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { webRoutes } from "@/lib/web-routes"
 import { Calendar, House, LucideIcon, Users } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 const items: { title: string; url: string; Icon: LucideIcon }[] = [
-  { title: "Home", url: "/", Icon: House },
-  { title: "Matches", url: "/matches", Icon: Calendar },
-  { title: "Teams", url: "/teams", Icon: Users },
+  { title: "Home", url: webRoutes.home, Icon: House },
+  { title: "Matches", url: webRoutes.matches.index, Icon: Calendar },
+  { title: "Teams", url: webRoutes.teams.index, Icon: Users },
 ]
 
 const NavMain = () => {

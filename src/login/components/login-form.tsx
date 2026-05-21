@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/card"
 import { Field, FieldDescription, FieldGroup } from "@/components/ui/field"
 import { authClient } from "@/lib/auth-client"
+import { webRoutes } from "@/lib/web-routes"
 import { loginFormSchema } from "@/login/lib/schema"
 import { LoginFormOutput } from "@/login/lib/type"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -68,7 +69,8 @@ const LoginForm = () => {
             <Field>
               <SubmitButton isPending={isPending}>Log in</SubmitButton>
               <FieldDescription className="text-center">
-                Don&apos;t have an account? <Link href="/sign-up">Sign up</Link>
+                Don&apos;t have an account?{" "}
+                <Link href={webRoutes.signUp}>Sign up</Link>
               </FieldDescription>
             </Field>
           </FieldGroup>

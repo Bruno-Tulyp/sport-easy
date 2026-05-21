@@ -9,6 +9,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import { webRoutes } from "@/lib/web-routes"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import React from "react"
@@ -37,7 +38,7 @@ const AppBreadcrumb = () => {
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link href="/">Home</Link>
+            <Link href={webRoutes.home}>Home</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         {truncateSegments && (
