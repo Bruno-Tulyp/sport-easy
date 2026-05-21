@@ -1,5 +1,6 @@
 "use client"
 
+import DataIsEmpty from "@/components/query/data-is-empty"
 import ErrorInQuery from "@/components/query/error-in-query"
 import { TypographyH2 } from "@/components/ui/typography"
 import { matchRpcClient } from "@/hono/lib/rpc-client"
@@ -56,7 +57,7 @@ const FetchMatches = ({ teamSlug }: { teamSlug?: string }) => {
       <MatchCard key={match.slug} match={match} isFutureMatch />
     ))
   ) : (
-    <p>No future matches found.</p>
+    <DataIsEmpty description="No future matches found." />
   )
 
   const pastMatchesContent = data.pastMatches.length ? (
@@ -64,7 +65,7 @@ const FetchMatches = ({ teamSlug }: { teamSlug?: string }) => {
       <MatchCard key={match.slug} match={match} />
     ))
   ) : (
-    <p>No past matches found.</p>
+    <DataIsEmpty description="No past matches found." />
   )
 
   return (
