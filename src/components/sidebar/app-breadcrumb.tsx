@@ -9,6 +9,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import { deslugify } from "@/lib/utils"
 import { webRoutes } from "@/lib/web-routes"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -28,7 +29,7 @@ const AppBreadcrumb = () => {
         .slice(0, segments.length - displayedSegments.length + index + 1)
         .join("/")
 
-    const label = segment.replaceAll("-", " ")
+    const label = deslugify(segment)
 
     return { href, label }
   })
