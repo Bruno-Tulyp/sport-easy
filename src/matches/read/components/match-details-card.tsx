@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { Skeleton } from "@/components/ui/skeleton"
 import {
   Table,
   TableBody,
@@ -54,7 +55,12 @@ type Props =
 
 const MatchDetailsCard = ({ match, participants, reply, skeleton }: Props) => {
   if (skeleton) {
-    return "Loading match details..."
+    return (
+      <>
+        <Skeleton className="h-56" />
+        <Skeleton className="h-96" />
+      </>
+    )
   }
 
   const {
