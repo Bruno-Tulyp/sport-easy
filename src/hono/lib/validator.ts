@@ -3,7 +3,7 @@ import { Hook } from "@hono/zod-validator"
 import { Context, Env } from "hono"
 import z from "zod"
 
-export const zValidatorError: Hook<unknown, Env, string> = (res, c) => {
+export const zValidatorError = ((res, c) => {
   const {
     var: { fail },
   } = c as Context<HonoAppEnv>
@@ -11,4 +11,4 @@ export const zValidatorError: Hook<unknown, Env, string> = (res, c) => {
   if (!res.success) {
     return fail(400, z.prettifyError(res.error))
   }
-}
+}) satisfies Hook<unknown, Env, string>
