@@ -6,7 +6,7 @@ import { auth } from "@/lib/auth"
 import { logger } from "hono/logger"
 import { handle } from "hono/vercel"
 
-const app = factory.createApp().basePath("/api")
+export const app = factory.createApp().basePath("/api")
 
 app.use(logger())
 
